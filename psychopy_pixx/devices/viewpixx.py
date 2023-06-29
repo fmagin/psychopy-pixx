@@ -46,7 +46,7 @@ class ViewPixx:
     def linearize_luminance(self, assert_register=True):
         if assert_register:
            try:
-               calib_reg = self.window.monitor.currentCalib['viewpixx']['register'] 
+               calib_reg = self.window.window.currentCalib['viewpixx']['register']
            except KeyError:
                raise ValueError("No register data found in calibration file.\n"
                     "This means, the calibration was probably not created with the psychopy-pixx tools.\n"
@@ -55,7 +55,7 @@ class ViewPixx:
            for k, v in calib_reg.items():
                assert register[k] == v, f"Expects {k}={v}, got {k}={register[k]}"
                 
-        self.shader_clut = interp_clut(self.window.monitor)
+        self.shader_clut = interp_clut(self.window.window)
         
     @property
     def shader_clut(self) -> np.ndarray:
@@ -215,7 +215,7 @@ class ViewPixx:
         self._pixxdevice.updateRegisterCache()
 
     def use_calibration_register(self):
-        self.register = self.window.monitor.currentCalib['viewpixx']['register'] 
+        self.register = self.window.window.currentCalib['viewpixx']['register']
     
 
 def interp_clut(monitor):
